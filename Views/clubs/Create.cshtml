@@ -1,0 +1,205 @@
+﻿@model FYP.Models.club
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+
+
+    .styled-input input:focus ~ label {
+        font-size: 14px;
+        color: #3E8E94;
+        top: -3.25rem;
+        -webkit-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .styled-input input:hover ~ #bottombefore {
+        background-color: #3e3e3e;
+        -webkit-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .label-focused {
+        font-size: 14px !important;
+        color: #3E8E94 !important;
+        top: -3.25rem !important;
+    }
+
+    .styled-input input ~ label {
+        font-size: 20px;
+        font-family: 'Roboto';
+        font-weight: lighter;
+        color: #999;
+        padding: 1rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        -webkit-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+        pointer-events: none;
+    }
+
+    .styled-input input:focus ~ .tspan {
+        width: 100%;
+        -webkit-transition: all 0.075s ease;
+        transition: all 0.075s ease;
+    }
+
+    .styled-input {
+        float: left;
+        width: 280px;
+        margin: 20px 0 20px;
+        position: relative;
+        display: block;
+        background-color: white;
+        border-top: 1px solid #999;
+        border-right: 1px solid #999;
+        border-left: 1px solid #999;
+    }
+
+        .styled-input.wide {
+            width: 100%;
+        }
+
+        .styled-input input, .styled-input textarea {
+            padding: 1rem 1rem;
+            border: 0;
+            width: 100%;
+            font-size: 18px;
+            background-color: transparent;
+        }
+
+            .styled-input input ~ .tspan {
+                display: block;
+                width: 0;
+                height: 3px;
+                background: #3E8E94;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                -webkit-transition: all 0.125s ease;
+                transition: all 0.125s ease;
+            }
+
+    #bottombefore {
+        display: block;
+        height: 1px;
+        background: #999;
+        width: 100%;
+    }
+
+    input:focus {
+        outline: 0;
+    }
+
+    /* CSS for Dropdown Select menus: */
+    .ddselector {
+        margin-top: 20px;
+        width: 280px;
+        height: 40px;
+        padding-left: 10px;
+        font-size: 16px;
+        font-family: HelveticaNeue;
+        color: #999;
+    }
+
+    .dd-selector-label {
+        font-family: HelvNeueBold;
+        color: #004480;
+        background-color: transparent;
+    }
+
+    option:disabled {
+        background-color: white;
+        font-family: HelvNeueBold;
+        color: #004480;
+    }
+
+    .hide-div {
+        visibility: hidden;
+    }
+
+    #areaOption {
+        float: left;
+    }
+
+    .form-box {
+        width: 350px;
+        height: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 30px;
+        padding-top: 20px;
+     
+    }
+
+    .custom-bold {
+        font-family: 'Roboto';
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 25px
+    }
+
+    .fcontainer {
+        margin-left: 20px;
+    }
+</style>
+
+
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+
+
+        <h4 class="large-heading-sans" style="padding-top: 50px; padding-bottom: 20px; font-family: 'Merriweather'">Create a new club</h4>
+        <hr class="hr" />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-box">
+
+            <!-- Club Name -->
+            <div class="fcontainer">
+                <div class="styled-input">
+                    <input type="text" autocomplete="off" name="clubname" required />
+                    <label>Club Name</label>
+                    <div id="bottombefore"></div>
+                    <span class="tspan"></span>
+                </div>
+            </div>
+
+
+            <div class="fcontainer">
+                <div class="custom-bold">Creator: <span style="font-weight: normal;">@Session["name"]</span></div>
+            </div>
+
+            <div class="fcontainer">
+                <div style="height: 200px;">
+                    <textarea autocomplete="off" name="description" style="height: 120px; width: 280px; font-family: 'Roboto';" required placeholder="Club description..."></textarea>
+
+                </div>
+            </div>
+
+
+            <div class="form-group" style="width: 70px; margin-left: auto; margin-right: auto;">
+                <div class="col" >
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+
+            
+
+
+        </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

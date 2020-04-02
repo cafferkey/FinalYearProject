@@ -1,0 +1,344 @@
+﻿
+/* BlLUE: rgb(43, 103, 143) */
+
+.body-main {
+	width: 100%;
+	height: 2000px;
+	padding: 0;
+	margin: 0;
+	background-color: #F4F4F4;
+}
+
+body {
+	padding: 0;
+	background-color: #F4F4F4;
+}
+
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.navbar-default {
+	background-color: white;
+	border: none;
+	margin: 0;
+	font-family: 'Roboto';
+	font-weight: 600;
+	max-width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+	min-width: 600px;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+	background-color: white;
+}
+
+.searchbar {
+	margin-top: 10px;
+	min-width: 100px;
+	font-size: 12px;
+	max-width: 120px;
+	border: 1px solid #bbb;
+	padding: 2px;
+}
+
+.booknav > li > a {
+	font-family: 'Roboto';
+	padding-left: 25px;
+	padding-right: 25px;
+	font-size: 12px;
+}
+
+.customheadinglarge {
+	font-family: "Merriweather";
+	font-weight: 100;
+	color: #5a5a5a;
+	margin-top: 10px;
+	margin-bottom: 25px;
+	font-size: 24px;
+	letter-spacing: -1px;
+}
+
+.large-heading-sans {
+	font: 'Roboto';
+	font-size: 24px;
+	font-weight: bolder;
+	text-align: center;
+	letter-spacing: -1px;
+	opacity: .9;
+}
+
+.home-heading {
+	font-family: 'Roboto';
+	font-size: 36px;
+	font-weight: bolder;
+	text-align: center;
+	padding: 20px;
+	color: white;
+}
+
+.formatcover {
+	height: 244px;
+	width: 160px;
+	display: inline;
+	filter: brightness(99%);
+	margin-bottom: 10px;
+	box-shadow: 0 12px 19px rgba(0,0,0,.24);
+	outline: 1px solid rgba(90, 90, 90, 0.20);
+} 
+
+	.formatcover:hover {
+		filter: brightness(100%);
+	}
+
+.bookunit {
+	height: 300px;
+	width: 160px;
+	display: inline;
+	float: left;
+	margin-left: 20px;
+	margin-right: 20px;
+	transition: transform .2s;
+}
+
+.bookunit:hover {
+	transform: scale(1.1);
+}
+
+.booktitle {
+	display: inline;
+}
+
+.booktitletext {
+	font-family: 'Roboto';
+	font-weight: bold;
+	font-size: 15px;	
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 0;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.bookauthor {
+	text-align: center !important;
+	font-family: 'Roboto';
+	font-weight: lighter;
+	color: #5a5a5a;
+	margin-top: 5px;
+	font-size: 14px;
+}
+
+#results {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.book-info-unit {
+	width: 900px;
+	height: 500px;
+	display: inline;
+
+}
+
+.booktitletext-info {
+	font-family: 'Roboto';
+	font-weight: bold;
+	color: black;
+	opacity: .75;
+	margin-top: 40px;
+	letter-spacing: -1px;
+}
+
+
+
+.format-info-cover {
+	height: 390px;
+	width: 256px;
+	display: inline;
+	margin-top: 50px;
+	outline: 1px solid rgba(90, 90, 90, 0.20);
+}
+
+
+
+.bookauthor-info {
+	font-family: Clearface ITC Pro;
+	font-weight: lighter;
+	color: #5a5a5a;
+	font-size: 18px;
+	float: left;
+}
+
+.hr {
+	border-top-color: rgba(90, 90, 90, 0.20);
+	width: 700px;
+	margin-top: 5px;
+}
+
+.book-desc {
+	width: 700px;
+	font-family: 'Merriweather', Arial;
+	font-weight: lighter;
+	line-height: 1.75;
+	color: #5a5a5a;
+	font-size: 14px;
+}
+
+.book-rating {
+	display: inline;
+}
+
+br + br + br {
+	display: none
+}
+
+.publisher-info {
+	float: right;
+	font-family: Clearface ITC Pro;
+	font-weight: lighter;
+	color: #5a5a5a;
+	font-size: 18px;
+}
+
+/* CSS for "Add New" button */
+
+#addplus {
+	font-family: 'Roboto', 'Times New Roman';
+	font-size: 50px;
+	height: 40px;
+	color: #1b1615;
+	font-weight: bold;
+	line-height: 0;
+	float: left;
+	margin-top: 10px;
+}
+
+#addnew {
+	font-family: 'Roboto', 'Times New Roman';
+	font-size: 12px;
+	color: #1b1615;
+	text-align: center;
+	font-weight: bolder;
+}
+
+.svm-button {
+	background-color: rgb(249, 249, 249);
+	height: 40px;
+	margin: 0;
+	border-color: #1b1615;
+	border-radius: 30px;
+	width: 150px;
+}
+
+	.svm-button:hover {
+		background-color: #1b1615;
+		border-color: #1b1615;
+		-webkit-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+	}
+
+		.svm-button:hover #addnew {
+			color: white;
+			-webkit-transition: all 0.3s ease;
+			transition: all 0.3s ease;
+		}
+
+
+#addnew-l {
+	font-family: 'Helvetica', 'Times New Roman';
+	font-size: 15px;
+	color: #1b1615;
+	text-align: center;
+	font-weight: bolder;
+}
+
+.svm-button-l {
+	background-color: rgb(249, 249, 249);
+	border-width: 2px;
+	height: 50px;
+	margin: 0;
+	border-color: #1b1615;
+	border-radius: 30px;
+	width: 180px;
+}
+
+	.svm-button-l:hover {
+		background-color: #1b1615;
+		border-color: #1b1615;
+		-webkit-transition: all 0.3s ease;
+		transition: all 0.3s ease;
+		color: white;
+	}
+
+		.svm-button-l:hover #addnew-l {
+			color: white;
+			-webkit-transition: all 0.3s ease;
+			transition: all 0.3s ease;
+		}
+
+	.svm-button-l:focus, .svm-button-l:active {
+		background-color: #1b1615;
+		border-color: #1b1615;		
+		color: white;
+	}
+
+		.svm-button-l:focus #addnew-l, .svm-button-l:focus #addnew-l {
+			color: white;
+		}
+
+:focus {
+	outline: none !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+.home-blurb {
+	width: 500px;
+	float: left;
+	font-family: 'Merriweather';
+	font-size: 18px;
+	margin-left: -50px;
+	padding: 15px;
+	color: black;
+}
+
+
+.login-div {
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 35px;
+	padding-bottom: 25px;
+}
+
+.large-input {
+	width: 700px;
+	height: 250px;
+	max-width: 700px;
+	max-height: 300px;
+	font-family: 'Meriweather';
+	font-size: 18px;
+}
+
+

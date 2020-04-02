@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e12a93c8383a4a3186ee6ffc238b2cc0" Name="Diagram1">
+        <EntityTypeShape EntityType="bookclubModel.clubbook" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookclubModel.club" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookclubModel.meeting" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookclubModel.member" Width="1.5" PointX="6" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookclubModel.userbook" Width="1.5" PointX="6" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bookclubModel.user" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="bookclubModel.FK_clubbooks_clubs" ManuallyRouted="false" />
+        <AssociationConnector Association="bookclubModel.FK_meetings_clubs" ManuallyRouted="false" />
+        <AssociationConnector Association="bookclubModel.FK_members_clubs" ManuallyRouted="false" />
+        <AssociationConnector Association="bookclubModel.FK_members_users" ManuallyRouted="false" />
+        <AssociationConnector Association="bookclubModel.FK_userbooks_users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,85 @@
+﻿@model FYP.Models.userbook
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Leave a review for: " + ViewBag.bookDetails[0];
+}
+
+
+@using (Html.BeginForm()) {
+
+    <div class="body-main">
+
+        <div id="results">
+
+            <div class="book-info-unit">
+
+                <div class="col-lg-6" style="width: 300px;">
+
+                    <!-- Cover -->
+                    <img class="format-info-cover" src="@ViewBag.bookDetails[5]" />
+
+                    <!--<div class="book-rating">Average Rating:</div>-->
+
+
+
+                    <div class="save-div">
+
+                        <div class="collect-div"></div>
+
+                        <div class="list-div"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6" style="margin-bottom: 35px;">
+
+                    <!-- Title -->
+                    <h1 class="booktitletext-info">@ViewBag.bookDetails[0]</h1>
+
+                    <!-- Author -->
+                    <div style="clear: both; width: 700px;">
+                        <h5 class="bookauthor-info">@ViewBag.bookDetails[1]</h5>
+
+                        <h5 class="publisher-info"><i>@ViewBag.bookDetails[2]</i>, @ViewBag.bookDetails[3].Substring(0, 4)</h5>
+                    </div>
+
+                    <hr class="hr" />
+
+                    <!-- Review -->
+                    <div class="book-desc">
+
+                        <textarea name="reviewbody" class="large-input" id="review-content"></textarea>
+
+
+                    </div>
+
+                    <div>
+
+                        <span>Rating:</span>
+                    </div>
+
+                    <hr class="hr" style="margin-top: 10px;" />
+
+                </div>
+
+            
+                
+
+                <div style="width: 150px; height: 40px; margin-left: auto; margin-right: auto; margin-top: 20px; padding-right: 15px">
+                    <a onclick='addUserReview("@ViewBag.bookDetails[6]", @Session["userid"])' style="align-items:center;">
+                        <button type="button" class="btn svm-button" style="margin-left: -14px;">
+                            <span id="addnew">SUBMIT REVIEW</span>
+                        </button>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+}
+    

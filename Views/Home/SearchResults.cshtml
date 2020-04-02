@@ -1,0 +1,347 @@
+﻿
+@{
+    ViewBag.Title = "Results for: '" + ViewBag.searched + "'";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style type="text/css">
+
+    .formatcover-search {
+        height: 79px;
+        width: 52px;
+        display: inline;
+        float: left;
+        margin-right: 25px;
+        border-image-outset: 1px;
+    }
+
+
+    .info-div-search {
+        height: 80px;
+        width: 500px;
+        background-color: white;
+        border: 1px solid white;
+        border-bottom: 1px solid #77DD77;
+        border-right: none;
+    }
+
+        .info-div-search:hover {
+            /*border: 1px solid #999;*/
+        }
+
+    .booktitletext-search {
+        font-family: 'Merriweather';
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 0;
+        color: black;
+        text-align: left;
+        padding-top: 10px;
+        height: 30px;
+        transition: transform .2s;
+    }
+
+    .bookauthor-search {
+        font-family: 'Helvetica LT Std';
+        font-weight: lighter;
+        color: #5a5a5a;
+        font-size: 14px;
+        vertical-align: bottom;
+        text-align: left;
+    }
+
+    .res-list {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .book-search-unit {
+        margin-bottom: 15px;
+        width: 500px;
+        transition: transform .2s;
+    }
+
+        .book-search-unit:hover .booktitletext-search {
+            color: #77DD77;
+            transition: ease .2s;
+        }
+
+
+    .add-button {
+        background-color: rgb(249, 249, 249);
+        height: 30px;
+        margin: 0;
+        margin-top: -10px;
+        margin-right: 10px;
+        border: 1px solid black;
+        border-radius: 30px;
+        width: 80px;
+        float: right;
+        display: inline;
+        text-align: center;
+        font-family: 'Roboto';
+        font-weight: bold;
+        color: black;
+        font-size: 12px;
+        padding-top: 7px;
+        position: relative;
+    }
+
+
+        .add-button:hover {
+            background-color: #1b1615;
+            border-color: #1b1615;
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+    .menu-content {
+        display: none;
+        border: 1px solid red;
+        float: right;
+        margin-left: 480px;
+        position: absolute;
+    }
+
+    .sbar {
+        width: 300px;
+        height: 75px;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 35px;
+        margin-bottom: 25px;
+        /*box-shadow: 0 12px 19px rgba(0,0,0,.24);*/
+        outline: 1px solid rgba(0, 0, 0, 0.20);
+    }
+
+    form {
+        display: inline;
+    }
+
+    #searchInput {
+        display: inline;
+    }
+
+    .save-icon {
+        float: right;
+        margin-left: 200px;
+        height: 29px;
+        width: 25px;
+        float: right;
+        display: inline;
+        position: relative;
+    }
+
+    #collection-icon {
+        margin-top: -50px;
+        fill: rgb(22, 160, 133);
+    }
+
+    .cust-icon {
+        text-align: center;
+        font-size: 24px;
+        padding-top: 5px;
+        text-align: center;
+        padding-left: 10px;
+    }
+
+    .save-menu {
+        width: 40px;
+        height: 79px;
+        margin-top: -80px;
+        display: inline-block;
+        float: right;
+        opacity: 1;
+        background-color: #F4F4F4;
+        border-right: 1px solid #77DD77;
+        z-index: 999;
+    }
+
+        .save-menu:hover {
+            cursor: pointer;
+        }
+
+            .save-menu:hover .booktitletext-search {
+                color: black !important;
+            }
+
+    #bookmark-icon {
+        color: #a81918;
+        padding-top: 8px;
+        padding-left: 11px;
+    }
+
+    #list-icon {
+        color: #2b678f;
+        padding-top: 8px;
+    }
+
+    .bookmark-div {
+        height: 40px;
+    }
+
+        .bookmark-div:hover {
+            background-color: #a81918;
+            transition: all 0.2s ease;
+        }
+
+            .bookmark-div:hover #bookmark-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list-div {
+        height: 39px;
+    }
+
+        .list-div:hover {
+            background-color: #2b678f;
+            transition: all 0.2s ease;
+        }
+
+            .list-div:hover #list-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list:hover .booktitletext-search {
+        color: black !important;
+    }
+
+
+    .list-div-active {
+        background-color: #2b678f;
+    }
+
+    .list-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+    .bookmark-div-active {
+        background-color: #a81918;
+    }
+
+    .bookmark-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+
+    .tooltip-div {
+        position: absolute;
+        width: 200px;
+        margin-left: 50px;
+        color: #1d1d1d;
+        padding-left: 5px;
+        font-family: 'Roboto';
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+
+    .bookmark-tip {
+        margin-top: -28px;
+        display: block;
+        opacity: 0;
+        transition: all 0.25s ease;
+    }
+
+    .bookmark-div:hover + .bookmark-tip {
+        display: block;
+        opacity: 1;
+        transition: opacity 0.25s ease;
+    }
+
+    .list-tip {
+        margin-top: -25px;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .list-div:hover + .list-tip {
+        display: block;
+        transition: all 0.25s ease;
+        opacity: 1;
+    }
+
+
+</style>
+
+
+
+
+<div class="body-main">
+
+    <div style="width: 800px; margin-left: auto; margin-right: auto;">
+        <div style="width: 500px;">
+            <div class="sbar">
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get)) {
+
+                    <input class="btn svm-search" autocomplete="off" type="text" size="14" name="SearchString" id="searchInput" value="@ViewBag.searched" style="margin-top: 20px; border: 1px solid black; margin-left: 50px; width: 200px;" />
+
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="res-list">
+
+        @for (var i = 0; i < ViewBag.booklist.Count; i++) {
+
+            <div class="book-search-unit">
+
+                <a href="@Url.Action("bookInfo", "Home", new { id = ViewBag.booklist[i][6]} )" style="width: 470px;">
+
+                    <img class="formatcover-search" src="@ViewBag.booklist[i][5]" />
+
+                    <div class="info-div-search col">
+
+                        <div class="booktitletext-search" style="overflow: hidden;">@ViewBag.booklist[i][0]</div>
+                        <div class="bookauthor-search">by @ViewBag.booklist[i][1]</div>
+
+
+                        
+
+                    </div>
+
+                </a>
+
+                <div class="save-menu">
+
+                            <div class="bookmark-div" onclick='addUserBook("@ViewBag.booklist[i][6]", @Session["userid"], true)'>
+                                <i class="fas fa-bookmark cust-icon" id="bookmark-icon"></i><br />
+                            </div>
+
+                            <div class="bookmark-tip tooltip-div">
+                                < Add to Books I've Read
+                            </div>
+
+                            <div class="list-div" onclick='addUserBook("@ViewBag.booklist[i][6]", @Session["userid"], false)'>
+                                <i class="fas fa-stream cust-icon" id="list-icon"></i>
+                            </div>
+
+                            <div class="list-tip tooltip-div">
+                                < Add to Books to Read
+                            </div>
+
+                        </div>
+            </div>
+
+           
+
+        }
+
+    </div>
+
+
+   
+   
+
+</div>

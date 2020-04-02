@@ -1,0 +1,59 @@
+﻿@model FYP.Models.meeting
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>meeting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.meetingname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.meetingname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bookid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bookid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.meetingtime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.meetingtime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.club.clubname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.club.clubname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.meetingid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

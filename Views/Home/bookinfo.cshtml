@@ -1,0 +1,230 @@
+﻿@model FYP.Models.userbook
+
+@{
+    ViewBag.Title = ViewBag.bookDetails[0];
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<style>
+    .save-icon {
+        float: right;
+        margin-left: 200px;
+        height: 29px;
+        width: 25px;
+        float: right;
+        display: inline;
+        position: relative;
+    }
+
+    #collection-icon {
+        margin-top: -50px;
+        fill: rgb(22, 160, 133);
+    }
+
+    .cust-icon {
+        text-align: center;
+        font-size: 24px;
+        padding-top: 5px;
+        text-align: center;
+        padding-left: 10px;
+    }
+
+    .save-menu {
+        width: 40px;
+        height: 79px;
+        margin-top: -80px;
+        display: inline-block;
+        float: right;
+        opacity: 1;
+        background-color: #F4F4F4;
+        z-index: 999;
+        margin-left: 50px;
+    }
+
+        .save-menu:hover {
+            cursor: pointer;
+        }
+
+            .save-menu:hover .booktitletext-search {
+                color: black !important;
+            }
+
+    #bookmark-icon {
+        color: #a81918;
+        padding-top: 8px;
+        padding-left: 11px;
+    }
+
+    #list-icon {
+        color: #2b678f;
+        padding-top: 8px;
+    }
+
+    .bookmark-div {
+        height: 40px;
+    }
+
+        .bookmark-div:hover {
+            background-color: #a81918;
+            transition: all 0.2s ease;
+        }
+
+            .bookmark-div:hover #bookmark-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list-div {
+        height: 39px;
+    }
+
+        .list-div:hover {
+            background-color: #2b678f;
+            transition: all 0.2s ease;
+        }
+
+            .list-div:hover #list-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list:hover .booktitletext-search {
+        color: black !important;
+    }
+
+
+    .list-div-active {
+        background-color: #2b678f;
+    }
+
+    .list-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+    .bookmark-div-active {
+        background-color: #a81918;
+    }
+
+    .bookmark-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+
+    .tooltip-div {
+        position: absolute;
+        width: 200px;
+        margin-left: 50px;
+        color: #1d1d1d;
+        padding-left: 5px;
+        font-family: 'Roboto';
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+
+    .bookmark-tip {
+        margin-top: -28px;
+        display: block;
+        opacity: 0;
+        transition: all 0.25s ease;
+    }
+
+    .bookmark-div:hover + .bookmark-tip {
+        display: block;
+        opacity: 1;
+        transition: opacity 0.25s ease;
+    }
+
+    .list-tip {
+        margin-top: -25px;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .list-div:hover + .list-tip {
+        display: block;
+        transition: all 0.25s ease;
+        opacity: 1;
+    }
+</style>
+
+<div class="body-main">
+
+    <div id="results">
+
+        <div class="book-info-unit">
+
+            <div class="col-lg-6" style="width: 300px;">
+
+                <!-- Cover -->
+                <img class="format-info-cover" src="@ViewBag.bookDetails[5]" />
+
+                <!--<div class="book-rating">Average Rating:</div>-->
+
+                <div style="width: 150px; height: 40px; margin-left: auto; margin-right: auto; margin-top: 20px; padding-right: 15px">
+                    <a href='~/Home/Review/@ViewBag.bookDetails[6]' style="align-items:center;">
+                        <button type="button" class="btn svm-button" style="margin-left: -14px;">
+                            <span id="addnew">LEAVE A REVIEW</span>
+                        </button>
+                    </a>
+                </div>
+
+
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <!-- Title -->
+                <h1 class="booktitletext-info">@ViewBag.bookDetails[0]</h1>
+
+                <div style="width: 700px;">
+                    <div class="save-menu">
+
+                        <div class="bookmark-div" onclick='addUserBook("@ViewBag.bookDetails[6]", @Session["userid"], true)'>
+                            <i class="fas fa-bookmark cust-icon" id="bookmark-icon"></i><br />
+                        </div>
+
+                        <div class="bookmark-tip tooltip-div">
+                            < Add to Books I've Read
+                        </div>
+
+                        <div class="list-div" onclick='addUserBook("@ViewBag.bookDetails[6]", @Session["userid"], false)'>
+                            <i class="fas fa-stream cust-icon" id="list-icon"></i>
+                        </div>
+
+                        <div class="list-tip tooltip-div">
+                            < Add to Books to Read
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Author -->
+                <div style="clear: both; width: 700px;">
+                    <h5 class="bookauthor-info">@ViewBag.bookDetails[1]</h5>
+
+                    <h5 class="publisher-info"><i>@ViewBag.bookDetails[2]</i>, @ViewBag.bookDetails[3].Substring(0, 4)</h5>
+                </div>
+
+                <hr class="hr" />
+
+                <!-- Description -->
+                <div class="book-desc">@Html.Raw(ViewBag.bookDetails[4])</div>
+
+                <hr class="hr" style="margin-top: 10px;" />
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+

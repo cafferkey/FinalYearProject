@@ -1,0 +1,308 @@
+﻿@model FYP.Models.meeting
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+
+    .bootstrap-datetimepicker-widget {
+        width: 280px !important;
+    }
+
+    datetimepicker-input {
+        border-radius: 0;
+        border: 1px solid #999;
+    }
+
+    .styled-input input:focus ~ label {
+        font-size: 14px;
+        color: #3E8E94;
+        top: -3.25rem;
+        -webkit-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .styled-input input:hover ~ #bottombefore {
+        background-color: #3e3e3e;
+        -webkit-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .label-focused {
+        font-size: 14px !important;
+        color: #3E8E94 !important;
+        top: -3.25rem !important;
+    }
+
+    .styled-input input ~ label {
+        font-size: 16px;
+        font-family: 'Roboto';
+        font-weight: lighter;
+        color: #999;
+        padding: 1rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        -webkit-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+        pointer-events: none;
+    }
+
+    .styled-input input:focus ~ .tspan {
+        width: 100%;
+        -webkit-transition: all 0.075s ease;
+        transition: all 0.075s ease;
+    }
+
+    .styled-input {
+        float: left;
+        width: 280px;
+        margin: 20px 0 20px;
+        position: relative;
+        display: block;
+        background-color: white;
+        border-top: 1px solid #999;
+        border-right: 1px solid #999;
+        border-left: 1px solid #999;
+    }
+
+        .styled-input.wide {
+            width: 100%;
+        }
+
+        .styled-input input, .styled-input textarea {
+            padding: 1rem 1rem;
+            border: 0;
+            width: 100%;
+            font-size: 16px;
+            background-color: transparent;
+        }
+
+            .styled-input input ~ .tspan {
+                display: block;
+                width: 0;
+                height: 3px;
+                background: #3E8E94;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                -webkit-transition: all 0.125s ease;
+                transition: all 0.125s ease;
+            }
+
+    #bottombefore {
+        display: block;
+        height: 1px;
+        background: #999;
+        width: 100%;
+    }
+
+    input:focus {
+        outline: 0;
+    }
+
+    /* CSS for Dropdown Select menus: */
+    .ddselector {
+        margin-top: 20px;
+        width: 280px;
+        height: 40px;
+        padding-left: 10px;
+        font-size: 16px;
+        font-family: 'Roboto';
+        color: #999;
+        margin-bottom: 20px;
+    }
+
+    .dd-selector-label {
+        font-family: 'Roboto';
+        color: #004480;
+        background-color: transparent;
+    }
+
+    option:disabled {
+        background-color: white;
+        font-family: 'Roboto';
+        color: #3E8E94;
+        font-weight: bold;
+    }
+
+    .hide-div {
+        visibility: hidden;
+    }
+
+    #areaOption {
+        float: left;
+    }
+
+    .form-box {
+        width: 350px;
+        height: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 30px;
+        padding-top: 20px;
+    }
+
+    .fcontainer {
+        padding-left: 20px;
+    }
+
+    .time-field {
+        border: 1px solid #999;
+        width: 50px;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        -webkit-appearance: none;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .time-label {
+        font-size: 18px;
+        font-family: HelvNeueThin;
+        font-weight: bold;
+        color: #999;
+    }
+
+    #time-arrow {
+        display: inline-block;
+        font-size: 16px;
+        color: #999;
+        margin: 4px auto 4px 17px;
+        font-weight: lighter;
+    }
+
+        #time-arrow:hover {
+            color: #3e3e3e;
+            -webkit-transition: all 0.25s ease;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+    .time-field::-webkit-inner-spin-button,
+    .time-field::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    #time-colon {
+        font-family: 'Roboto';
+        font-size: 30px;
+        color: #999;
+        text-align: center;
+    }
+
+    .time-picker-div {
+        outline: 1px dotted #999;
+        margin-bottom: 25px;
+        width: 280px;
+        margin-left: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-top: 30px;
+    }
+
+
+</style>
+
+
+
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+
+    <h4 class="large-heading-sans" style="padding-top: 50px; padding-bottom: 20px; font-family: 'Merriweather'">Schedule new meeting</h4>
+    <hr class="hr" />
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-box">
+
+
+        <!-- Club ID (Hidden) -->
+        <div class="fcontainer" style="display: none;">
+            <input type="text" value="@ViewBag.cid" autocomplete="off" name="clubid" required />
+        </div>
+
+        <!-- Meeting Name -->
+        <div class="fcontainer">
+            <div class="styled-input" style="margin-top: 0; margin-bottom: 0;">
+                <input type="text" autocomplete="off" name="meetingname" required />
+                <label>Meeting Name</label>
+                <div id="bottombefore"></div>
+                <span class="tspan"></span>
+            </div>
+        </div>
+
+        <!-- Book Dropdown Name -->
+        <div class="fcontainer">
+            <select required name="bookid" class="ddselector" id="book-menu" style="float: left;">
+
+                <option selected value="" style="font-family: 'Roboto';" disabled>Select Book</option>
+
+                @{ for (int i = 0; i < ViewBag.unreadIdList.Length; i++) {
+                        <option value="@ViewBag.unreadIdList[i]" style="font-family: 'Roboto';">@ViewBag.unreadTitles[i]</option>
+                    }
+                }
+
+            </select>
+        </div>
+
+        
+        <div class="fcontainer" style="width: 500px;">
+            <div class="row">
+                <div class="col-sm-6" style="width: 500px;">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest" style="width: 500px;">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="meetingtime" style="height: 40px; " placeholder="Meeting Time"/>
+                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar" style="position:relative; font-size: 22px; padding-left: 5px; padding-top: 5px;"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker({
+                            format: 'DD/MM/YYYY HH:mm:ss',
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+        
+
+
+
+
+        <!-- Description -->
+        <div class="fcontainer">
+            <div style="height: 175px;">
+                <textarea autocomplete="off" name="description" style="height: 100px; width: 280px; font-family: 'Roboto';" required placeholder="Meeting description..."></textarea>
+
+            </div>
+        </div>
+
+        <!-- Create Button-->
+        <div class="form-group" style="width: 70px; margin-left: auto; margin-right: auto;">
+            <div class="col">
+                <input type="submit" value="Create" class="btn btn-default" style="margin-top: 5px;" />
+            </div>
+        </div>
+
+
+
+
+    </div>
+ }
+
+
+
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

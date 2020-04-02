@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="shortcut icon" href="/bookclub/favicon.ico">
+
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|Open+Sans|Roboto|Roboto+Slab&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/699f171123.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('input').blur(function () {
+
+                if ($(this).val() != '') {
+
+                    $(this).next('label').addClass('label-focused');
+
+                } else {
+
+                    $(this).next('label').removeClass('label-focused');
+                }
+            });
+        })
+
+
+
+        $(document).ready(function () {
+
+            $('.bookmark-div').click(function () {
+
+                $(this).toggleClass('bookmark-div-active');
+                $(this).children().toggleClass('bookmark-icon-active');
+            });
+        })
+
+
+        $(document).ready(function () {
+
+            $('.list-div').click(function () {
+
+                $(this).toggleClass('list-div-active');
+                $(this).children().toggleClass('list-icon-active');
+            });
+        })
+
+
+        function addUserBook(id, uid, ir) {
+
+            var data = { id: id, uid: uid, isRead: ir };
+            $.ajax({
+                type: "POST",
+                url: "/bookclub/Home/NewUserBook/",
+                data: data,
+                success: function () {
+                    // take the result data and update the div
+
+                },
+                dataType: "text"
+            });
+        }
+
+        function addClubBook(id, cid, ir) {
+
+            var data = { id: id, clubid: cid, isRead: ir };
+            $.ajax({
+                type: "POST",
+                url: "/bookclub/Home/NewClubBook/",
+                data: data,
+                success: function () {
+
+                },
+                dataType: "text"
+            });
+        }
+
+
+        function addUserReview(id, uid) {
+
+            var data = { rev: document.getElementById('review-content').value, gbid: id, uid: uid };
+            $.ajax({
+                type: "POST",
+                url: "/bookclub/Home/addReview/",
+                data: data,
+                success: function () {
+                    window.location.href = '../bookInfo/' + id;
+
+                },
+                dataType: "text"
+            });
+        }
+
+        function addBook1() {
+
+            $('#tabHeading1 a[href="#addclubbooks"]').tab('show');
+        }
+
+        function addBook2() {
+
+            $('#tabHeading1 a[href="#addclubbooks-unread"]').tab('show');
+        }
+
+        $(function () {
+            $('.booknav > form').submit(function () {
+                $("#custloading").show();
+            });
+        });
+
+        $(function () {
+            $('.sbar > form').submit(function () {
+                $("#custloading2").show();
+            });
+        });
+
+    </script>
+
+
+    <style type="text/css">
+        form {
+            display: inline;
+        }
+
+        #searchInput {
+            border: 1px solid #bbb;
+            display: inline;
+            float: left;
+            margin-top: 9px;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #3498db;
+            width: 25px;
+            height: 25px;
+            -webkit-animation: spin 1.5s linear infinite; /* Safari */
+            animation: spin 1.5s linear infinite;
+            display: inline-block;
+            margin-left: -30px;
+            margin-top: 15px;
+            float: left;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    
+        
+   
+
+    <div style="height: 50px; width: 100%; background-color: white;">
+
+        <nav class="navbar navbar-default">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")" style="color: #77DD77;">BookClub</a>
+            </div>
+
+            <ul class="nav navbar-nav booknav">
+
+                <li>
+                    <a href="#">BROWSE &#9660;</a>
+                </li>
+
+                <li>
+                    <a href='@Url.Action("MyBooks", "Home", new { id = Session["userid"] })'> MY BOOKS</a>
+                </li>
+
+                <li>
+                    <a href='@Url.Action("MyClubs", "Home", new { id = Session["userid"] })'>MY CLUBS</a>
+                </li>
+
+            </ul>
+
+            <div style="float: right;">
+                <ul class="nav navbar-nav booknav">
+
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Get)) {
+
+                        <input class="btn svm-search" autocomplete="off" type="text" size="14" name="SearchString" id="searchInput" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search books...'" placeholder="Search books..." style="width: 220px;" />
+
+                    }
+                    <div class="loader" id="custloading" style="display: none;"></div>
+
+
+                    @if (Session["userid"] != null) {
+                        <li>
+                            <a href="@Url.Action("userinfo", "Home", new { id = Session["userid"] })" style="float: right;">@Session["email"]</a>
+                        </li>
+                    } else {
+                        <li>
+                            <a href="~/Home/Login" style="float: right;">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </nav>
+
+        @RenderBody()
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "BookClub";
+}
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        
+         var bestSellersNY = ["9781472261397", "9781984803566", "9781529124408", "9781472154668", "9781538734032"];
+
+        $(document).ready(function generateList() {           
+
+            for (i = 0; i < bestSellersNY.length; i++) {
+
+                $.ajax({
+                    url: "https://www.googleapis.com/books/v1/volumes?q=isbn:" + bestSellersNY[i] + "&key=AIzaSyB2goHAHfKJgTv_Bvhcxi1wcnRdNRG4wR4",
+                    dataType: "json",
+
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+        });
+
+        /*
+
+        function bookSearch() {
+            var search = document.getElementById('search').value;
+            document.getElementById('results').innerHTML = "";
+            console.log(search);
+
+            $.ajax({
+                url: "https://www.googleapis.com/books/v1/volumes?q=" + search + "&key=AIzaSyB2goHAHfKJgTv_Bvhcxi1wcnRdNRG4wR4",
+                dataType: "json",
+
+                success: function (data) {
+                    console.log(data);
+                    
+                    for (i = 0; i < data.items.length; i++) {
+                        results.innerHTML += '<img src="' + data.items[i].volumeInfo.imageLinks.thumbnail + '" style="height: 195px; width: 128px;"/>';
+                        results.innerHTML += "<h3>" + data.items[i].volumeInfo.title + "</h3>"                        
+                    }
+                    
+                },
+
+                type: 'GET'
+            });
+        }
+
+        document.getElementById('button').addEventListener('click', bookSearch, false);
+
+    */
+    
+    </script>
+
+</head>
+
+
+<style type="text/css">
+
+    .home-div1 {
+        margin-top: -50px;
+        background-color: #f4f4f4;
+        border-bottom: 1px solid rgba(90, 90, 90, 0.20);
+    }
+
+    .heading-div {
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        height: 75px;
+        display: inline;
+    }
+
+    .overlay {
+   
+        height: 450px;
+        margin-top: -70px;
+    }
+    .home-heading {
+    }
+
+</style>
+
+
+<div class="body-main">
+
+
+    <div style="height: 450px; padding-top: 50px; margin-top: 0;" class="home-div1">
+
+        <div class="overlay">
+
+            <div style="width: 100%; height: 80px; background-color: #242d3c; margin-bottom: 75px;">
+                <h1 class="home-heading" style="margin-bottom: 75px; padding-top: 20px;">
+                    Welcome to <span style="color: #77DD77">BookClub</span>
+                </h1>
+            </div>
+
+            <!-- Check if user is logged in -->
+
+                <div class="col-lg-6" style="">
+                    <img src="/bookclub/Content/home-pic.png" style="margin-left: 120px;"/>
+                </div>
+
+            
+
+                <div class="col-lg-6">
+                    <div class="home-blurb">
+
+                        BookClub is a web application for managing and organising your bookclub's reviews and discussions.<br /><br />
+                        Create a club and invite members now to get started.
+
+                    </div>
+
+
+
+                    @if (Session["userid"] != null) {
+                        
+                            <div style="width: 200px; height: 40px; margin-left: auto; margin-right: auto; margin-top: 10px; padding-right: 15px">
+                                <a href="~/clubs/Create" style="align-items:center;">
+                                    <button type="button" class="btn svm-button-l" style="margin-left: 50px; margin-top: 25px;">
+                                        <span id="addnew-l">CREATE CLUB</span>
+                                    </button>
+                                </a>
+                            </div>
+                        
+
+                    } else {
+
+                        
+                            <div style="width: 200px; height: 40px; margin-left: auto; margin-right: auto; margin-top: 10px; padding-right: 15px">
+                                <a href="~/home/register" style="align-items:center;">
+                                    <button type="button" class="btn svm-button-l" style="margin-left: 50px; margin-top: 25px;">
+                                        <span id="addnew-l">CREATE CLUB</span>
+                                    </button>
+                                </a>
+                            </div>
+                       
+                    }
+
+
+                </div>
+
+        </div>
+
+    </div>
+
+    <div style="width: 1000px; margin-left: auto; margin-right: auto; padding-left: 20px; padding-top: 25px; margin-top: 20px;">
+        <h1 class="large-heading-sans">See what others are reading...</h1>
+        <hr class="hr" style="width: 700px;" />
+        <h1 class="customheadinglarge">NY Times Bestsellers 2020:</h1>
+    </div>
+
+    <div id="results">
+
+
+
+        @for (var i = 0; i < ViewBag.booklist.Count; i++) {
+
+            <div class="bookunit">
+
+
+
+                <a href="@Url.Action("bookInfo", "Home", new { id = ViewBag.booklist[i][6]} )">
+
+                    <img class="formatcover" src="@ViewBag.booklist[i][5]" />
+
+                    <div class="booktitle">
+                        <h3 class="booktitletext">@ViewBag.booklist[i][0]</h3>
+                    </div>
+
+                    <div class="authordiv">
+                        <p class="bookauthor">by @ViewBag.booklist[i][1]</p>
+                    </div>
+
+                </a>
+            </div>
+
+        }
+
+
+
+    </div>
+
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>

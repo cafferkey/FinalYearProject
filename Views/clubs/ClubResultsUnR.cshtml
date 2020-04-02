@@ -1,0 +1,751 @@
+﻿@model FYP.Models.club
+
+@{ var mems = Model.members;
+    var meetings = Model.meetings;
+    var cbooks = Model.clubbooks; }
+
+
+@{ List<List<String>> booklistTrue = new List<List<String>>();
+    List<List<String>> booklistFalse = new List<List<String>>();
+
+    foreach (var item in ViewBag.clubBooklist) {
+
+        foreach (var other in ViewBag.clubBooksRead) {
+
+            if (item[6] == other.gbid) {
+                booklistTrue.Add(item);
+            }
+        }
+
+        foreach (var again in ViewBag.clubBooksToRead) {
+            if (item[6] == again.gbid) {
+                booklistFalse.Add(item);
+            }
+        }
+    }
+}
+
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #pageHeading {
+        font-family: 'Roboto';
+        text-align: center;
+    }
+
+    a {
+        font-size: 14px;
+    }
+
+    #tabHeading > a {
+        color: rgba(51, 51, 51, 0.90);
+        font-size: 16px;
+        border: none;
+        text-align: left;
+        font-family: 'Roboto';
+        font-weight: lighter;
+    }
+
+    #tabHeading {
+        width: 300px;
+        display: block;
+        border: none;
+        text-align: left;
+        padding-bottom: 10px;
+    }
+
+        #tabHeading:hover > a {
+            color: black;
+        }
+
+
+        #tabHeading.active > a {
+            background-color: transparent;
+            font-weight: bold;
+            color: black;
+        }
+
+            #tabHeading.active > a:before {
+                content: '•';
+                font-weight: bolder;
+                margin-left: -15px;
+                margin-right: 10px;
+            }
+
+        #tabHeading:hover > a {
+            background-color: transparent;
+        }
+
+
+    h4 {
+        font-family: 'Roboto';
+        font-size: 18px;
+        text-align: center;
+        color: black;
+    }
+
+    .area-heading {
+        font-weight: bold;
+        text-align: center;
+        font-family: 'Roboto';
+        font-size: 18px;
+        margin-top: 30px;
+        -webkit-text-stroke: 0.3px;
+        letter-spacing: .5px;
+    }
+
+    .custom-tab-list {
+        width: 300px;
+        float: left;
+        background-color: rgba(233, 200, 147, 0.48);
+        padding-top: 50px;
+        padding-left: 100px;
+        padding-right: 7px;
+        border-right: 1px solid rgba(90, 90, 90, 0.20);
+        min-height: 1500px;
+    }
+
+    .book-icon {
+        margin-bottom: 50px;
+    }
+
+
+
+    .member-unit {
+        border-bottom: 1px solid rgba(90, 90, 90, 0.20);
+        width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 65px;
+        margin-bottom: 20px;
+        padding-left: 25px;
+        padding-top: 10px;
+    }
+
+    .name-span {
+        font-family: 'Merriweather';
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .email-span {
+        margin-top: 5px;
+        font-family: 'roboto';
+        font-weight: lighter;
+        color: rgba(51, 51, 51, 0.75);
+        display: inline-block;
+    }
+
+    .content-heading {
+        text-align: left;
+        margin-left: 175px;
+        display: inline-block;
+        kerning: -1px;
+        font-family: 'Roboto';
+        font-weight: bolder;
+        margin-bottom: 50px;
+    }
+
+    #no-meeting {
+        text-align: center;
+        font-family: 'Roboto';
+    }
+
+    #no-books {
+        text-align: center;
+        font-family: 'Roboto';
+    }
+
+
+    .sbar {
+        width: 350px;
+        height: 75px;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin-left: 350px;
+        margin-top: -10px;
+        margin-bottom: 25px;
+        /*box-shadow: 0 12px 19px rgba(0,0,0,.24);*/
+        outline: 1px solid rgba(0, 0, 0, 0.20);
+        position: relative;
+    }
+
+    #search-div {
+        width: 350px;
+        float: left;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .desc-div {
+        margin-left: 350px;
+        width: 700px;
+        padding-left: 135px;
+        font-family: 'Meriweather';
+        font-size: 22px;
+        color: rgba(51, 51, 51, 0.75);
+        position: relative;
+    }
+
+    #tabHeading1 > a {
+        color: rgb(51, 51, 51);
+        font-size: 16px;
+    }
+
+    #tabHeading1 {
+        width: 380px;
+    }
+
+        #tabHeading1.active > a {
+            color: #004480;
+            background-color: transparent;
+            border-bottom: none;
+        }
+
+    #book-tabs {
+        max-width: 705px;
+        margin-left: 485px;
+        height: 45px;
+        margin-bottom: 50px;
+    }
+
+    .formatcover-search {
+        height: 79px;
+        width: 52px;
+        display: inline;
+        float: left;
+        margin-right: 25px;
+        border-image-outset: 1px;
+    }
+
+
+    .info-div-search {
+        height: 80px;
+        width: 500px;
+        background-color: white;
+        border: 1px solid white;
+        border-bottom: 1px solid #77DD77;
+        border-right: none;
+    }
+
+        .info-div-search:hover {
+            /*border: 1px solid #999;*/
+        }
+
+    .booktitletext-search {
+        font-family: 'Merriweather';
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 0;
+        color: black;
+        text-align: left;
+        padding-top: 10px;
+        height: 30px;
+        transition: transform .2s;
+    }
+
+    .bookauthor-search {
+        font-family: 'Helvetica LT Std';
+        font-weight: lighter;
+        color: #5a5a5a;
+        font-size: 14px;
+        vertical-align: bottom;
+        text-align: left;
+    }
+
+    .res-list {
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        padding-left: 50px;
+    }
+
+    .book-search-unit {
+        margin-bottom: 15px;
+        width: 500px;
+        transition: transform .2s;
+    }
+
+        .book-search-unit:hover .booktitletext-search {
+            color: #77DD77;
+            transition: ease .2s;
+        }
+
+    .save-icon {
+        float: right;
+        margin-left: 200px;
+        height: 29px;
+        width: 25px;
+        float: right;
+        display: inline;
+        position: relative;
+    }
+
+    #collection-icon {
+        margin-top: -50px;
+        fill: rgb(22, 160, 133);
+    }
+
+    .cust-icon {
+        text-align: center;
+        font-size: 24px;
+        padding-top: 5px;
+        text-align: center;
+        padding-left: 10px;
+    }
+
+    .save-menu {
+        width: 40px;
+        height: 79px;
+        margin-top: -80px;
+        display: inline-block;
+        float: right;
+        opacity: 1;
+        background-color: #F4F4F4;
+        border-right: 1px solid #77DD77;
+        z-index: 999;
+    }
+
+        .save-menu:hover {
+            cursor: pointer;
+        }
+
+            .save-menu:hover .booktitletext-search {
+                color: black !important;
+            }
+
+    #bookmark-icon {
+        color: #a81918;
+        padding-top: 8px;
+        padding-left: 11px;
+    }
+
+    #list-icon {
+        color: #2b678f;
+        padding-top: 8px;
+    }
+
+    .bookmark-div {
+        height: 40px;
+    }
+
+        .bookmark-div:hover {
+            background-color: #a81918;
+            transition: all 0.2s ease;
+        }
+
+            .bookmark-div:hover #bookmark-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list-div {
+        height: 39px;
+    }
+
+        .list-div:hover {
+            background-color: #2b678f;
+            transition: all 0.2s ease;
+        }
+
+            .list-div:hover #list-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list:hover .booktitletext-search {
+        color: black !important;
+    }
+
+
+    .list-div-active {
+        background-color: #2b678f;
+    }
+
+    .list-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+    .bookmark-div-active {
+        background-color: #a81918;
+    }
+
+    .bookmark-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+
+    .tooltip-div {
+        position: absolute;
+        width: 200px;
+        margin-left: 50px;
+        color: #1d1d1d;
+        padding-left: 5px;
+        font-family: 'Roboto';
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+
+    .bookmark-tip {
+        margin-top: -28px;
+        display: block;
+        opacity: 0;
+        transition: all 0.25s ease;
+    }
+
+    .bookmark-div:hover + .bookmark-tip {
+        display: block;
+        opacity: 1;
+        transition: opacity 0.25s ease;
+    }
+
+    .list-tip {
+        margin-top: -25px;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .list-div:hover + .list-tip {
+        display: block;
+        transition: all 0.25s ease;
+        opacity: 1;
+    }
+</style>
+
+
+<div class="col custom-tab-list">
+
+    <img src="~/Content/book-icon.svg" class="book-icon" />
+
+
+    <ul class="nav nav-tabs nav-justified">
+
+        <li id="tabHeading"><a href="#about" data-toggle="tab">About</a></li>
+        <li id="tabHeading"><a href="#members" data-toggle="tab">Members:  @mems.Count()</a></li>
+        <li id="tabHeading"><a href="#meetings" data-toggle="tab">Meetings</a></li>
+        <li id="tabHeading"><a href="#booksread" data-toggle="tab">Books we've read</a></li>
+        <li id="tabHeading" class="active"><a href="#toread" data-toggle="tab">Books to read</a></li>
+        <li id="tabHeading"><a href="#polls" data-toggle="tab">Polls</a></li>
+    </ul>
+
+</div>
+
+
+<div class="tab-content col" style="height: 1000px;">
+
+
+    <h2 class="large-heading-sans" style="font-family: 'Merriweather'; padding: 35px;">@Model.clubname</h2>
+    <hr class="hr" />
+
+
+    <!-- "About" content -->
+    <div id="about" class="tab-pane fade in row" style="margin-top: 25px;">
+        <h4 class="content-heading">About</h4>
+
+        <div class="desc-div">@Model.description</div>
+    </div>
+
+    <!-- "Members" content -->
+    <div id="members" class="tab-pane fade in row" style="margin-top: 25px;">
+
+        <h4 class="content-heading">Members</h4>
+
+        @foreach (var m in mems) {
+
+            <div class="member-unit">
+
+                <span class="name-span">
+                    @m.user.fullname @if (Model.creator == m.userid) {
+                        @:(creator)
+                    }
+                </span><br />
+
+                <span class="email-span" style="margin-top: 5px;">@m.user.email</span>
+
+            </div>
+
+        }
+
+        <div style="text-align: center">
+            <a href='@Url.Action("AddMembers", "clubs", new { id = Model.clubid })' style="align-items:center;">
+                <button type="button" class="btn svm-button-l" style="">
+                    <span id="addnew-l">ADD MEMBERS</span>
+                </button>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- "Meetings" content -->
+    <div id="meetings" class="tab-pane fade in row" style="margin-top: 25px;">
+        <h4 class="content-heading">Meetings</h4>
+
+        @if (meetings.Count() == 0) {
+
+            <div id="no-meeting">There are currently no meetings scheduled for this club</div>
+
+            <div style="text-align: center; margin-top: 50px;">
+
+                <a href="~/clubs/Create" style="align-items:center;">
+                    <button type="button" class="btn svm-button-l" style="">
+                        <span id="addnew-l">CREATE MEETING</span>
+                    </button>
+                </a>
+            </div>
+        }
+
+    </div>
+
+    <!-- "Books read" content -->
+    <div id="booksread" class="tab-pane fade in row" style="margin-top: 25px;">
+
+        <h4 class="content-heading">Books we've read</h4>
+
+        <ul class="nav nav-tabs nav-justified" id="book-tabs">
+            <li id="tabHeading1" class="read-lib active"><a href="#clubbooks" data-toggle="tab">Books</a></li>
+            <li id="tabHeading1" class="add-read"><a href="#addclubbooks" data-toggle="tab">Add Books</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="clubbooks" class="tab-pane fade in row active">
+
+                @{ var amountread = 0;
+
+                    foreach (var cbook in cbooks) {
+                        if (cbook.isread == true) {
+                            amountread++;
+                        }
+                    }
+
+                    if (amountread == 0) {
+
+
+                        <div id="no-books">This shelf is empty.</div>
+
+                        <div style="text-align: center; margin-top: 30px;">
+
+                            <a onclick="addBook1()" style="align-items:center;">
+                                <button type="button" class="btn svm-button-l" style="">
+                                    <span id="addnew-l">ADD BOOKS</span>
+                                </button>
+                            </a>
+                        </div>
+
+                    } else {
+
+                        <div class="res-list" style="margin-top: 0;">
+
+                            @for (var i = 0; i < booklistTrue.Count; i++) {
+
+                                <div class="book-search-unit">
+
+                                    <a href="@Url.Action("bookInfo", "Home", new { id = booklistTrue[i][6] })" style="width: 470px;">
+
+                                        <img class="formatcover-search" src="@booklistTrue[i][5]" />
+
+                                        <div class="info-div-search col">
+
+                                            <div class="booktitletext-search" style="overflow: hidden;">@booklistTrue[i][0]</div>
+                                            <div class="bookauthor-search">by @booklistTrue[i][1]</div>
+
+
+                                        </div>
+
+                                    </a>
+
+                                    <div class="save-menu">
+
+
+                                        <div class="bookmark-div" style="margin-top: 20px;">
+                                            <i class="fas fa-comments cust-icon" style="padding-left: 6px;" id="bookmark-icon"></i><br />
+                                        </div>
+
+                                        <div class="bookmark-tip tooltip-div">
+                                            < View Club Reviews
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            }
+
+
+                        </div>
+
+                    }
+                }
+
+            </div>
+
+            <div id="addclubbooks" class="tab-pane fade in row">
+
+                <div id="search-div" style="text-align: center;">
+
+                    <div class="sbar">
+                        @using (Html.BeginForm("ClubResults", "clubs", new { id = Model.clubid }, FormMethod.Get)) {
+
+                            <input class="btn svm-search" autocomplete="off" type="text" size="14" name="sid" id="searchInput" placeholder="Search books..." style="margin-top: 20px; border: 1px solid black; margin-left: 50px; width: 250px;" />
+
+                        }
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- "To read" content -->
+    <div id="toread" class="tab-pane fade in row active" style="margin-top: 25px;">
+        <h4 class="content-heading">Books to read</h4>
+
+        <ul class="nav nav-tabs nav-justified" id="book-tabs">
+            <li id="tabHeading1" class="unread-lib"><a href="#clubbooks-unread" data-toggle="tab">Books</a></li>
+            <li id="tabHeading1" class="add-unread active"><a href="#addclubbooks-unread" data-toggle="tab">Add Books</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="clubbooks-unread" class="tab-pane fade in row">
+
+                @{ var amountunread = 0;
+
+                    foreach (var cbook in cbooks) {
+                        if (cbook.isread == true) {
+                            amountunread++;
+                        }
+                    }
+
+                    if (amountunread == 0) {
+
+
+                        <div id="no-books">This shelf is empty.</div>
+
+                        <div style="text-align: center; margin-top: 30px;">
+
+                            <a onclick="addBook2()" style="align-items:center;">
+                                <button type="button" class="btn svm-button-l" style="">
+                                    <span id="addnew-l">ADD BOOKS</span>
+                                </button>
+                            </a>
+                        </div>
+
+                    } else {
+
+                        <div class="res-list" style="margin-top: 0;">
+
+                            @for (var i = 0; i < booklistFalse.Count; i++) {
+
+                                <div class="book-search-unit">
+
+                                    <a href="@Url.Action("bookInfo", "Home", new { id = booklistFalse[i][6] })" style="width: 470px;">
+
+                                        <img class="formatcover-search" src="@booklistFalse[i][5]" />
+
+                                        <div class="info-div-search col">
+
+                                            <div class="booktitletext-search" style="overflow: hidden;">@booklistFalse[i][0]</div>
+                                            <div class="bookauthor-search">by @booklistFalse[i][1]</div>
+
+
+                                        </div>
+
+                                    </a>
+
+                                    <div class="save-menu"></div>
+
+                                </div>
+
+                            }
+
+                        </div>
+
+                    }
+                }
+
+            </div>
+
+            <div id="addclubbooks-unread" class="tab-pane fade in row active">
+
+                <div id="search-div" style="text-align: center;">
+
+                    <div class="sbar">
+                        @using (Html.BeginForm("ClubResultsUnR", "clubs", FormMethod.Get)) {
+
+                            <input class="btn svm-search" autocomplete="off" type="text" size="14" name="sid" id="searchInput" value="@ViewBag.searched" placeholder="Search books..." style="margin-top: 20px; border: 1px solid black; margin-left: 50px; width: 250px;" />
+
+                        }
+                    </div>
+
+                </div>
+                <div class="res-list">
+
+                    @for (var i = 0; i < ViewBag.booklist.Count; i++) {
+
+                        <div class="book-search-unit">
+
+                            <a href="@Url.Action("bookInfo", "Home", new { id = ViewBag.booklist[i][6]} )" style="width: 470px;">
+
+                                <img class="formatcover-search" src="@ViewBag.booklist[i][5]" />
+
+                                <div class="info-div-search col">
+
+                                    <div class="booktitletext-search" style="overflow: hidden;">@ViewBag.booklist[i][0]</div>
+                                    <div class="bookauthor-search">by @ViewBag.booklist[i][1]</div>
+
+
+                                </div>
+
+                            </a>
+
+                            <div class="save-menu">
+
+                                <div class="bookmark-div" style="margin-top: 20px;" onclick='addClubBook("@ViewBag.booklist[i][6]", @Model.clubid, false)'>
+                                    <i class="fas fa-plus cust-icon" id="bookmark-icon"></i><br />
+                                </div>
+
+                                <div class="bookmark-tip tooltip-div">
+                                    < Add to Books to Read
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- "Polls" content -->
+    <div id="polls" class="tab-pane fade in row" style="margin-top: 25px;">
+        <h4 class="content-heading">Polls</h4>
+    </div>
+
+</div>
+
+
+
+
+
+@Html.ActionLink("Edit", "Edit", new { id = Model.clubid }) |
+@Html.ActionLink("Back to List", "Index")
+

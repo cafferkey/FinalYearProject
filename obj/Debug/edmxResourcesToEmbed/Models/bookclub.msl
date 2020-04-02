@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bookclubModelStoreContainer" CdmEntityContainer="bookclubEntities">
+    <EntitySetMapping Name="clubbooks">
+      <EntityTypeMapping TypeName="bookclubModel.clubbook">
+        <MappingFragment StoreEntitySet="clubbooks">
+          <ScalarProperty Name="clubid" ColumnName="clubid" />
+          <ScalarProperty Name="gbid" ColumnName="gbid" />
+          <ScalarProperty Name="isread" ColumnName="isread" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="clubs">
+      <EntityTypeMapping TypeName="bookclubModel.club">
+        <MappingFragment StoreEntitySet="clubs">
+          <ScalarProperty Name="clubid" ColumnName="clubid" />
+          <ScalarProperty Name="clubname" ColumnName="clubname" />
+          <ScalarProperty Name="creator" ColumnName="creator" />
+          <ScalarProperty Name="admins" ColumnName="admins" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="meetings">
+      <EntityTypeMapping TypeName="bookclubModel.meeting">
+        <MappingFragment StoreEntitySet="meetings">
+          <ScalarProperty Name="meetingid" ColumnName="meetingid" />
+          <ScalarProperty Name="clubid" ColumnName="clubid" />
+          <ScalarProperty Name="meetingname" ColumnName="meetingname" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="bookid" ColumnName="bookid" />
+          <ScalarProperty Name="meetingtime" ColumnName="meetingtime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="members">
+      <EntityTypeMapping TypeName="bookclubModel.member">
+        <MappingFragment StoreEntitySet="members">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="clubid" ColumnName="clubid" />
+          <ScalarProperty Name="test" ColumnName="test" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userbooks">
+      <EntityTypeMapping TypeName="bookclubModel.userbook">
+        <MappingFragment StoreEntitySet="userbooks">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="gbid" ColumnName="gbid" />
+          <ScalarProperty Name="isread" ColumnName="isread" />
+          <ScalarProperty Name="reviewbody" ColumnName="reviewbody" />
+          <ScalarProperty Name="urating" ColumnName="urating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="bookclubModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

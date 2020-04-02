@@ -1,0 +1,66 @@
+﻿@model IEnumerable<FYP.Models.club>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.clubname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.creator)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.admins)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.booksread)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bookstoread)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.meetings)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.clubname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.creator)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.booksread)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.bookstoread)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.meetings)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.clubid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.clubid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.clubid })
+        </td>
+    </tr>
+}
+
+</table>

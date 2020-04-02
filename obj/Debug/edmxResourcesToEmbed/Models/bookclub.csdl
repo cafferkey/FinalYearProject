@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bookclubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="clubbook">
+    <Key>
+      <PropertyRef Name="clubid" />
+      <PropertyRef Name="gbid" />
+    </Key>
+    <Property Name="clubid" Type="Int32" Nullable="false" />
+    <Property Name="gbid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="isread" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="club" Relationship="Self.FK_clubbooks_clubs" FromRole="clubbooks" ToRole="clubs" />
+  </EntityType>
+  <EntityType Name="club">
+    <Key>
+      <PropertyRef Name="clubid" />
+    </Key>
+    <Property Name="clubid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="clubname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="creator" Type="Int32" />
+    <Property Name="admins" Type="Int32" />
+    <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="clubbooks" Relationship="Self.FK_clubbooks_clubs" FromRole="clubs" ToRole="clubbooks" />
+    <NavigationProperty Name="meetings" Relationship="Self.FK_meetings_clubs" FromRole="clubs" ToRole="meetings" />
+    <NavigationProperty Name="members" Relationship="Self.FK_members_clubs" FromRole="clubs" ToRole="members" />
+  </EntityType>
+  <EntityType Name="meeting">
+    <Key>
+      <PropertyRef Name="meetingid" />
+    </Key>
+    <Property Name="meetingid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="clubid" Type="Int32" />
+    <Property Name="meetingname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="bookid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="meetingtime" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="club" Relationship="Self.FK_meetings_clubs" FromRole="meetings" ToRole="clubs" />
+  </EntityType>
+  <EntityType Name="member">
+    <Key>
+      <PropertyRef Name="userid" />
+      <PropertyRef Name="clubid" />
+    </Key>
+    <Property Name="userid" Type="Int32" Nullable="false" />
+    <Property Name="clubid" Type="Int32" Nullable="false" />
+    <Property Name="test" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="club" Relationship="Self.FK_members_clubs" FromRole="members" ToRole="clubs" />
+    <NavigationProperty Name="user" Relationship="Self.FK_members_users" FromRole="members" ToRole="users" />
+  </EntityType>
+  <EntityType Name="userbook">
+    <Key>
+      <PropertyRef Name="userid" />
+      <PropertyRef Name="gbid" />
+    </Key>
+    <Property Name="userid" Type="Int32" Nullable="false" />
+    <Property Name="gbid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="isread" Type="Boolean" Nullable="false" />
+    <Property Name="reviewbody" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="urating" Type="Int32" />
+    <NavigationProperty Name="user" Relationship="Self.FK_userbooks_users" FromRole="userbooks" ToRole="users" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="members" Relationship="Self.FK_members_users" FromRole="users" ToRole="members" />
+    <NavigationProperty Name="userbooks" Relationship="Self.FK_userbooks_users" FromRole="users" ToRole="userbooks" />
+  </EntityType>
+  <Association Name="FK_clubbooks_clubs">
+    <End Role="clubs" Type="Self.club" Multiplicity="1" />
+    <End Role="clubbooks" Type="Self.clubbook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clubs">
+        <PropertyRef Name="clubid" />
+      </Principal>
+      <Dependent Role="clubbooks">
+        <PropertyRef Name="clubid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_meetings_clubs">
+    <End Role="clubs" Type="Self.club" Multiplicity="0..1" />
+    <End Role="meetings" Type="Self.meeting" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clubs">
+        <PropertyRef Name="clubid" />
+      </Principal>
+      <Dependent Role="meetings">
+        <PropertyRef Name="clubid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_members_clubs">
+    <End Role="clubs" Type="Self.club" Multiplicity="1" />
+    <End Role="members" Type="Self.member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="clubs">
+        <PropertyRef Name="clubid" />
+      </Principal>
+      <Dependent Role="members">
+        <PropertyRef Name="clubid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_members_users">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="members" Type="Self.member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="members">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_userbooks_users">
+    <End Role="users" Type="Self.user" Multiplicity="1" />
+    <End Role="userbooks" Type="Self.userbook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="userbooks">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bookclubEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="clubbooks" EntityType="Self.clubbook" />
+    <EntitySet Name="clubs" EntityType="Self.club" />
+    <EntitySet Name="meetings" EntityType="Self.meeting" />
+    <EntitySet Name="members" EntityType="Self.member" />
+    <EntitySet Name="userbooks" EntityType="Self.userbook" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK_clubbooks_clubs" Association="Self.FK_clubbooks_clubs">
+      <End Role="clubs" EntitySet="clubs" />
+      <End Role="clubbooks" EntitySet="clubbooks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_meetings_clubs" Association="Self.FK_meetings_clubs">
+      <End Role="clubs" EntitySet="clubs" />
+      <End Role="meetings" EntitySet="meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_members_clubs" Association="Self.FK_members_clubs">
+      <End Role="clubs" EntitySet="clubs" />
+      <End Role="members" EntitySet="members" />
+    </AssociationSet>
+    <AssociationSet Name="FK_members_users" Association="Self.FK_members_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="members" EntitySet="members" />
+    </AssociationSet>
+    <AssociationSet Name="FK_userbooks_users" Association="Self.FK_userbooks_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="userbooks" EntitySet="userbooks" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

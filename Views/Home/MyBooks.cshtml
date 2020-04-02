@@ -1,0 +1,350 @@
+﻿@{  List<List<String>> booklistTrue = new List<List<String>>();
+    List<List<String>> booklistFalse = new List<List<String>>();
+
+    foreach (var item in ViewBag.booklist) {
+
+        foreach (var other in ViewBag.booksRead) {
+
+            if (item[6] == other) {
+                booklistTrue.Add(item);
+            }
+        }
+
+        foreach (var again in ViewBag.booksToRead) {
+            if (item[6] == again) {
+                booklistFalse.Add(item);
+            }
+        }
+    }
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "My Books";
+}
+
+<style>
+    #tabHeading > a {
+        color: rgb(51, 51, 51);
+        font-size: 16px;
+        font-family: 'Roboto'
+    }
+
+    #tabHeading {
+        width: 300px;
+    }
+
+        #tabHeading.active > a {
+            
+            color: black;
+            background-color: transparent;
+            border-bottom: none;
+        }
+
+    .formatcover-search {
+        height: 79px;
+        width: 52px;
+        display: inline;
+        float: left;
+        margin-right: 25px;
+        border-image-outset: 1px;
+    }
+
+
+    .info-div-search {
+        height: 80px;
+        width: 500px;
+        background-color: white;
+        border: 1px solid white;
+        border-bottom: 1px solid #77DD77;
+        border-right: none;
+    }
+
+        .info-div-search:hover {
+            /*border: 1px solid #999;*/
+        }
+
+    .booktitletext-search {
+        font-family: 'Merriweather';
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 0;
+        color: black;
+        text-align: left;
+        padding-top: 10px;
+        height: 30px;
+        transition: transform .2s;
+    }
+
+    .bookauthor-search {
+        font-family: 'Helvetica LT Std';
+        font-weight: lighter;
+        color: #5a5a5a;
+        font-size: 14px;
+        vertical-align: bottom;
+        text-align: left;
+    }
+
+    .res-list {
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .book-search-unit {
+        margin-bottom: 15px;
+        width: 500px;
+        transition: transform .2s;
+    }
+
+        .book-search-unit:hover .booktitletext-search {
+            color: #77DD77;
+            transition: ease .2s;
+        }
+
+    #mytabs {
+        margin-top: 50px;
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .save-icon {
+        float: right;
+        margin-left: 200px;
+        height: 29px;
+        width: 25px;
+        float: right;
+        display: inline;
+        position: relative;
+    }
+
+    #collection-icon {
+        margin-top: -50px;
+        fill: rgb(22, 160, 133);
+    }
+
+    .cust-icon {
+        text-align: center;
+        font-size: 18px;
+        padding-top: 5px;
+        text-align: center;
+        padding-left: 10px;
+    }
+
+    .save-menu {
+        width: 40px;
+        height: 79px;
+        margin-top: -80px;
+        display: inline-block;
+        float: right;
+        opacity: 1;
+        border-right: 1px solid #77DD77;
+        z-index: 999;
+    }
+
+        .save-menu:hover {
+            cursor: pointer;
+        }
+
+            .save-menu:hover .booktitletext-search {
+                color: black !important;
+            }
+
+    #bookmark-icon {
+        color: rgb(51, 51, 51);
+        padding-top: 8px;
+        padding-left: 11px;
+    }
+
+    #list-icon {
+        color: #2b678f;
+        padding-top: 8px;
+    }
+
+    .bookmark-div {
+        height: 40px;
+    }
+
+        .bookmark-div:hover {
+            background-color: rgb(51, 51, 51);
+            transition: all 0.2s ease;
+        }
+
+            .bookmark-div:hover #bookmark-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list-div {
+        height: 39px;
+    }
+
+        .list-div:hover {
+            background-color: #2b678f;
+            transition: all 0.2s ease;
+        }
+
+            .list-div:hover #list-icon {
+                color: #f4f4f4;
+                transition: all 0.2s ease;
+            }
+
+    .list:hover .booktitletext-search {
+        color: black !important;
+    }
+
+
+    .list-div-active {
+        background-color: #2b678f;
+    }
+
+    .list-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+    .bookmark-div-active {
+        background-color: #a81918;
+    }
+
+    .bookmark-icon-active {
+        color: #f4f4f4 !important;
+    }
+
+
+    .tooltip-div {
+        position: absolute;
+        width: 200px;
+        margin-left: 50px;
+        color: #1d1d1d;
+        padding-left: 5px;
+        font-family: 'Roboto';
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+
+    .bookmark-tip {
+        margin-top: -28px;
+        display: block;
+        opacity: 0;
+        transition: all 0.25s ease;
+    }
+
+    .bookmark-div:hover + .bookmark-tip {
+        display: block;
+        opacity: 1;
+        transition: opacity 0.25s ease;
+    }
+
+</style>
+
+<ul class="nav nav-tabs nav-justified" id="mytabs">
+    <li id="tabHeading" class="active"><a href="#read" data-toggle="tab"> <i class="fas fa-bookmark cust-icon" id="bookmark-icon" style="float: left; color: #a81918; font-size: 25px; padding-top: 0; margin-right: -25px;"></i>Books I've read</a></li>
+    <li id="tabHeading"><a href="#to-read" data-toggle="tab"><i class="fas fa-stream cust-icon" id="list-icon" style="float: left;  font-size: 25px; padding-top: 0; margin-right: -25px;"></i>Books to read</a></li>
+    
+</ul>
+
+
+<div class="tab-content" style="height: 1000px;">
+
+    <!-- "Have read" content -->
+    <div id="read" class="tab-pane fade in row active" style="margin-top: 25px;">
+
+        <div class="res-list">
+
+            @for (var i = 0; i < booklistTrue.Count; i++) {
+
+            <div class="book-search-unit">
+
+                <a href="@Url.Action("bookInfo", "Home", new { id = booklistTrue[i][6]} )" style="width: 470px;">
+
+                    <img class="formatcover-search" src="@booklistTrue[i][5]" />
+
+                    <div class="info-div-search col">
+
+                        <div class="booktitletext-search" style="overflow: hidden;">@booklistTrue[i][0]</div>
+                        <div class="bookauthor-search">by @booklistTrue[i][1]</div>
+
+
+
+
+                    </div>
+
+                </a>
+
+                <div class="save-menu">
+
+                    <div class="bookmark-div">
+                        <i class="fas fa-trash cust-icon" id="bookmark-icon"></i><br />
+                    </div>
+
+                    <div class="bookmark-tip tooltip-div">
+                        < Remove Book
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+
+            }
+
+        </div>
+
+
+
+
+    </div>
+
+    <!-- to read -->
+    <div id="to-read" class="tab-pane fade in row" style="margin-top: 25px;">
+
+
+        <div class="res-list">
+
+            @for (var i = 0; i < booklistFalse.Count; i++) {
+
+                <div class="book-search-unit">
+
+                    <a href="@Url.Action("bookInfo", "Home", new { id = booklistFalse[i][6]} )" style="width: 470px;">
+
+                        <img class="formatcover-search" src="@booklistFalse[i][5]" />
+
+                        <div class="info-div-search col">
+
+                            <div class="booktitletext-search" style="overflow: hidden;">@booklistFalse[i][0]</div>
+                            <div class="bookauthor-search">by @booklistFalse[i][1]</div>
+
+
+
+
+                        </div>
+
+                    </a>
+
+                    <div class="save-menu">
+
+                        <div class="bookmark-div">
+                            <i class="fas fa-trash cust-icon" id="bookmark-icon"></i><br />
+                        </div>
+
+                        <div class="bookmark-tip tooltip-div">
+                            < Remove Book
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+
+    </div>

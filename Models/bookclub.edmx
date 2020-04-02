@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bookclubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="clubbooks">
+          <Key>
+            <PropertyRef Name="clubid" />
+            <PropertyRef Name="gbid" />
+          </Key>
+          <Property Name="clubid" Type="int" Nullable="false" />
+          <Property Name="gbid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isread" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="clubs">
+          <Key>
+            <PropertyRef Name="clubid" />
+          </Key>
+          <Property Name="clubid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clubname" Type="varchar" MaxLength="50" />
+          <Property Name="creator" Type="int" />
+          <Property Name="admins" Type="int" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="meetings">
+          <Key>
+            <PropertyRef Name="meetingid" />
+          </Key>
+          <Property Name="meetingid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clubid" Type="int" />
+          <Property Name="meetingname" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="bookid" Type="varchar" MaxLength="50" />
+          <Property Name="meetingtime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="members">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="clubid" />
+          </Key>
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="clubid" Type="int" Nullable="false" />
+          <Property Name="test" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="userbooks">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="gbid" />
+          </Key>
+          <Property Name="userid" Type="int" Nullable="false" />
+          <Property Name="gbid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isread" Type="bit" Nullable="false" />
+          <Property Name="reviewbody" Type="varchar" MaxLength="1000" />
+          <Property Name="urating" Type="int" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="fullname" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_clubbooks_clubs">
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
+          <End Role="clubbooks" Type="Self.clubbooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
+            </Principal>
+            <Dependent Role="clubbooks">
+              <PropertyRef Name="clubid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meetings_clubs">
+          <End Role="clubs" Type="Self.clubs" Multiplicity="0..1" />
+          <End Role="meetings" Type="Self.meetings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
+            </Principal>
+            <Dependent Role="meetings">
+              <PropertyRef Name="clubid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_members_clubs">
+          <End Role="clubs" Type="Self.clubs" Multiplicity="1" />
+          <End Role="members" Type="Self.members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
+            </Principal>
+            <Dependent Role="members">
+              <PropertyRef Name="clubid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_members_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="members" Type="Self.members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="members">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userbooks_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="userbooks" Type="Self.userbooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="userbooks">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bookclubModelStoreContainer">
+          <EntitySet Name="clubbooks" EntityType="Self.clubbooks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clubs" EntityType="Self.clubs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="meetings" EntityType="Self.meetings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="members" EntityType="Self.members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userbooks" EntityType="Self.userbooks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_clubbooks_clubs" Association="Self.FK_clubbooks_clubs">
+            <End Role="clubs" EntitySet="clubs" />
+            <End Role="clubbooks" EntitySet="clubbooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meetings_clubs" Association="Self.FK_meetings_clubs">
+            <End Role="clubs" EntitySet="clubs" />
+            <End Role="meetings" EntitySet="meetings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_members_clubs" Association="Self.FK_members_clubs">
+            <End Role="clubs" EntitySet="clubs" />
+            <End Role="members" EntitySet="members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_members_users" Association="Self.FK_members_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="members" EntitySet="members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userbooks_users" Association="Self.FK_userbooks_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="userbooks" EntitySet="userbooks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bookclubModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="clubbook">
+          <Key>
+            <PropertyRef Name="clubid" />
+            <PropertyRef Name="gbid" />
+          </Key>
+          <Property Name="clubid" Type="Int32" Nullable="false" />
+          <Property Name="gbid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isread" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="club" Relationship="Self.FK_clubbooks_clubs" FromRole="clubbooks" ToRole="clubs" />
+        </EntityType>
+        <EntityType Name="club">
+          <Key>
+            <PropertyRef Name="clubid" />
+          </Key>
+          <Property Name="clubid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clubname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="creator" Type="Int32" />
+          <Property Name="admins" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="clubbooks" Relationship="Self.FK_clubbooks_clubs" FromRole="clubs" ToRole="clubbooks" />
+          <NavigationProperty Name="meetings" Relationship="Self.FK_meetings_clubs" FromRole="clubs" ToRole="meetings" />
+          <NavigationProperty Name="members" Relationship="Self.FK_members_clubs" FromRole="clubs" ToRole="members" />
+        </EntityType>
+        <EntityType Name="meeting">
+          <Key>
+            <PropertyRef Name="meetingid" />
+          </Key>
+          <Property Name="meetingid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clubid" Type="Int32" />
+          <Property Name="meetingname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="bookid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="meetingtime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="club" Relationship="Self.FK_meetings_clubs" FromRole="meetings" ToRole="clubs" />
+        </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="clubid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="clubid" Type="Int32" Nullable="false" />
+          <Property Name="test" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="club" Relationship="Self.FK_members_clubs" FromRole="members" ToRole="clubs" />
+          <NavigationProperty Name="user" Relationship="Self.FK_members_users" FromRole="members" ToRole="users" />
+        </EntityType>
+        <EntityType Name="userbook">
+          <Key>
+            <PropertyRef Name="userid" />
+            <PropertyRef Name="gbid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="gbid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isread" Type="Boolean" Nullable="false" />
+          <Property Name="reviewbody" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="urating" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="Self.FK_userbooks_users" FromRole="userbooks" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="members" Relationship="Self.FK_members_users" FromRole="users" ToRole="members" />
+          <NavigationProperty Name="userbooks" Relationship="Self.FK_userbooks_users" FromRole="users" ToRole="userbooks" />
+        </EntityType>
+        <Association Name="FK_clubbooks_clubs">
+          <End Role="clubs" Type="Self.club" Multiplicity="1" />
+          <End Role="clubbooks" Type="Self.clubbook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
+            </Principal>
+            <Dependent Role="clubbooks">
+              <PropertyRef Name="clubid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_meetings_clubs">
+          <End Role="clubs" Type="Self.club" Multiplicity="0..1" />
+          <End Role="meetings" Type="Self.meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
+            </Principal>
+            <Dependent Role="meetings">
+              <PropertyRef Name="clubid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_members_clubs">
+          <End Role="clubs" Type="Self.club" Multiplicity="1" />
+          <End Role="members" Type="Self.member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clubs">
+              <PropertyRef Name="clubid" />
+            </Principal>
+            <Dependent Role="members">
+              <PropertyRef Name="clubid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_members_users">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="members" Type="Self.member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="members">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userbooks_users">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="userbooks" Type="Self.userbook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="userbooks">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bookclubEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="clubbooks" EntityType="Self.clubbook" />
+          <EntitySet Name="clubs" EntityType="Self.club" />
+          <EntitySet Name="meetings" EntityType="Self.meeting" />
+          <EntitySet Name="members" EntityType="Self.member" />
+          <EntitySet Name="userbooks" EntityType="Self.userbook" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK_clubbooks_clubs" Association="Self.FK_clubbooks_clubs">
+            <End Role="clubs" EntitySet="clubs" />
+            <End Role="clubbooks" EntitySet="clubbooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_meetings_clubs" Association="Self.FK_meetings_clubs">
+            <End Role="clubs" EntitySet="clubs" />
+            <End Role="meetings" EntitySet="meetings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_members_clubs" Association="Self.FK_members_clubs">
+            <End Role="clubs" EntitySet="clubs" />
+            <End Role="members" EntitySet="members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_members_users" Association="Self.FK_members_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="members" EntitySet="members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userbooks_users" Association="Self.FK_userbooks_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="userbooks" EntitySet="userbooks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bookclubModelStoreContainer" CdmEntityContainer="bookclubEntities">
+          <EntitySetMapping Name="clubbooks">
+            <EntityTypeMapping TypeName="bookclubModel.clubbook">
+              <MappingFragment StoreEntitySet="clubbooks">
+                <ScalarProperty Name="clubid" ColumnName="clubid" />
+                <ScalarProperty Name="gbid" ColumnName="gbid" />
+                <ScalarProperty Name="isread" ColumnName="isread" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clubs">
+            <EntityTypeMapping TypeName="bookclubModel.club">
+              <MappingFragment StoreEntitySet="clubs">
+                <ScalarProperty Name="clubid" ColumnName="clubid" />
+                <ScalarProperty Name="clubname" ColumnName="clubname" />
+                <ScalarProperty Name="creator" ColumnName="creator" />
+                <ScalarProperty Name="admins" ColumnName="admins" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="meetings">
+            <EntityTypeMapping TypeName="bookclubModel.meeting">
+              <MappingFragment StoreEntitySet="meetings">
+                <ScalarProperty Name="meetingid" ColumnName="meetingid" />
+                <ScalarProperty Name="clubid" ColumnName="clubid" />
+                <ScalarProperty Name="meetingname" ColumnName="meetingname" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="bookid" ColumnName="bookid" />
+                <ScalarProperty Name="meetingtime" ColumnName="meetingtime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="members">
+            <EntityTypeMapping TypeName="bookclubModel.member">
+              <MappingFragment StoreEntitySet="members">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="clubid" ColumnName="clubid" />
+                <ScalarProperty Name="test" ColumnName="test" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userbooks">
+            <EntityTypeMapping TypeName="bookclubModel.userbook">
+              <MappingFragment StoreEntitySet="userbooks">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="gbid" ColumnName="gbid" />
+                <ScalarProperty Name="isread" ColumnName="isread" />
+                <ScalarProperty Name="reviewbody" ColumnName="reviewbody" />
+                <ScalarProperty Name="urating" ColumnName="urating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="bookclubModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
